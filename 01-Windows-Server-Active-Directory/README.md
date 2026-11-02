@@ -90,3 +90,23 @@ During this project, I investigated and resolved issues related to:
 ## Conclusion
 
 This homelab provides practical experience in designing, configuring, maintaining, and troubleshooting a Windows Server domain environment.
+
+
+
+
+## Network Architecture
+
+```mermaid
+flowchart TD
+    HOST["Hyper-V Host: DASCOMPUTER"]
+    SW["LAB-Switch: 192.168.100.0/24"]
+    DC["DC01: 192.168.100.10 - AD DS / DNS"]
+    FS["FS01: 192.168.100.30 - File Server"]
+    PC["CLIENT01: 192.168.100.101 - Windows 11"]
+
+    HOST --> SW
+    SW --> DC
+    SW --> FS
+    SW --> PC
+```
+

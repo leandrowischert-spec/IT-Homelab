@@ -54,3 +54,71 @@ Linux CLI, package management, SSH, Hyper-V, Docker Engine, container images and
 ## References
 - [Ubuntu Server Documentation](https://documentation.ubuntu.com/server/)
 - [Docker Documentation](https://docs.docker.com/)
+
+
+## Project: NGINX Web Server with Docker
+
+### Objective
+Deploy a custom HTML website using Docker and NGINX on an Ubuntu Server virtual machine.
+
+### Lab Environment
+- **Hypervisor:** Microsoft Hyper-V
+- **Operating System:** Ubuntu Server 24.04 LTS
+- **Container Platform:** Docker Engine
+- **Web Server:** NGINX
+- **Remote Administration:** SSH via Windows PowerShell
+
+### Implementation
+
+**1. Created a custom HTML website**
+
+Created an `index.html` file in the `~/meine-website` directory.
+
+**2. Deployed an NGINX container**
+
+```bash
+sudo docker run -d --name webserver -p 8080:80 nginx:stable
+```
+
+**3. Configured a bind mount**
+
+Mounted the local website directory into the NGINX container to serve custom HTML content.
+
+**4. Created a Dockerfile**
+
+```dockerfile
+FROM nginx:stable
+COPY index.html /usr/share/nginx/html/index.html
+```
+
+**5. Built a custom Docker image**
+
+```bash
+cd ~/meine-website
+sudo docker build -t mein-webserver:v1 .
+```
+
+**Build result:**
+
+```text
+Successfully built c59c65303066
+Successfully tagged mein-webserver:v1
+```
+
+### Skills Demonstrated
+
+- Linux server administration via SSH
+- Docker container lifecycle management
+- Container networking and port mapping
+- Docker bind mounts
+- Creating Dockerfiles
+- Building and tagging custom Docker images
+- Hosting a static website using NGINX
+
+### Next Steps
+
+- Run and verify a container from the custom image
+- Deploy multiple containers from the same image
+- Learn Docker Compose
+- Monitor container logs and resource usage
+- Explore Kubernetes fundamentals

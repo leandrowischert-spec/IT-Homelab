@@ -180,3 +180,129 @@ Initially, Microsoft Edge displayed an outdated version of the website. A forced
 ### Conclusion
 
 Successfully demonstrated the difference between host-mounted files and files embedded in a Docker image. Both NGINX containers were tested and their different update behaviors were confirmed.
+
+
+
+
+
+
+## Project: Managing Multiple Containers with Docker Compose
+
+### Objective
+
+Learn how to deploy and manage multiple Docker containers using a single YAML configuration file.
+
+### Lab Environment
+
+- **Hypervisor:** Microsoft Hyper-V
+- **Operating System:** Ubuntu Server 24.04 LTS
+- **Container Platform:** Docker Engine
+- **Docker Compose:** v2.40.3
+- **Web Server:** NGINX
+- **Custom Image:** `mein-webserver:v1`
+
+### Implementation
+
+**1. Installed Docker Compose**
+
+```bash
+sudo apt update
+sudo apt install docker-compose-v2
+sudo docker compose version
+```
+
+**2. Created a project directory**
+
+```bash
+mkdir -p ~/compose-projekt
+cd ~/compose-projekt
+```
+
+**3. Created a `compose.yaml` file**
+
+```yaml
+services:
+  web:
+    image: mein-webserver:v1
+    ports:
+      - "8082:80"
+
+  web2:
+    image: mein-webserver:v1
+    ports:
+      - "8083:80"
+```
+
+Both services use the same custom Docker image but run as independent containers.
+
+**4. Validated the configuration**
+
+```bash
+sudo docker compose config
+```
+
+The YAML configuration was successfully validated.
+
+**5. Deployed the containers**
+
+```bash
+sudo docker compose up -d
+```
+
+Docker Compose created a dedicated project network and started both containers.
+
+**6. Verified container status**
+
+```bash
+sudo docker compose ps
+```
+
+| Container | Image | Port | Result |
+|---|---|---|---|
+| compose-projekt-web-1 | mein-webserver:v1 | 8082 | Running |
+| compose-projekt-web2-1 | mein-webserver:v1 | 8083 | Running |
+
+**7. Tested container lifecycle management**
+
+```bash
+sudo docker compose stop
+sudo docker compose start
+sudo docker compose stop
+sudo docker compose ps -a
+```
+
+Both containers were successfully stopped, restarted, and stopped again.
+
+Final status:
+
+```text
+compose-projekt-web-1    Exited (0)
+compose-projekt-web2-1   Exited (0)
+```
+
+### Key Learnings
+
+- Writing and validating YAML configuration files
+- Managing multiple services with Docker Compose
+- Deploying multiple containers from the same image
+- Understanding container port mappings
+- Understanding Compose project networks
+- Starting and stopping multiple containers with a single command
+- Checking running and stopped containers
+- Understanding the difference between Docker Compose and individual `docker run` commands
+
+### Results
+
+Successfully deployed and managed two independent NGINX containers using Docker Compose.
+
+Both containers were created from the same custom Docker image and configured with separate host ports.
+
+The containers were successfully stopped and restarted using Docker Compose commands.
+
+### Next Steps
+
+- Inspect container logs
+- Monitor container resource usage
+- Learn Docker volumes and persistent storage
+- Explore multi-service applications
+- Begin Kubernetes fundamentals
